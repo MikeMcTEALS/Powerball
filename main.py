@@ -1,5 +1,6 @@
 import random
 import termcolor
+from TEALS_utils import get_valid_integer, safe_to_integer
 
 MIN_NUMBER_OF_QUICKPICKS = 10  # Min number of quick picks we can buy
 MAX_NUMBER_OF_QUICKPICKS = 50  # Max number of quick picks we can buy
@@ -29,6 +30,7 @@ def get_seed_value():
 # Input: None
 # Output: Number of quickpicks to purchase/generate
 def get_number_of_quickpicks():
+    """
     while True:
         prompt = str('How many quickpicks should we buy (%2d-%2d)? ' % (MIN_NUMBER_OF_QUICKPICKS, MAX_NUMBER_OF_QUICKPICKS))
         number = input(prompt)
@@ -39,7 +41,10 @@ def get_number_of_quickpicks():
             else:
                 print("'%2d' is outside of the allowed range. Please try again" % int(number))
         else:
-            print("'%s' is not a number. Please try again" % number)
+         print("'%s' is not a number. Please try again" % number)
+     """
+    prompt = str('How many quickpicks should we buy (%2d-%2d)? ' % (MIN_NUMBER_OF_QUICKPICKS, MAX_NUMBER_OF_QUICKPICKS))
+    return get_valid_integer(prompt, MIN_NUMBER_OF_QUICKPICKS, MAX_NUMBER_OF_QUICKPICKS)
 
 
 # Name: generate_quick_pick
@@ -93,7 +98,7 @@ def get_winning_powerball_numbers():
         if len(redBalls) == 1:
             break
 
-    return list(map(int, whiteBalls + redBalls))
+    return list(map(safe_to_integer, whiteBalls + redBalls))
 
 
 # Name: display_winning_ticket
@@ -239,6 +244,5 @@ for i in range(numberOfQuickPicks):
         totalWinnings += winnings
         lifetimeWinnings += winnings
     # How much did we win/net?
-
 
 display_summary_winnings(lifetimeWinnings, totalTicketCost)
